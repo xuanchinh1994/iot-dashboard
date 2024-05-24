@@ -103,6 +103,7 @@
             margin-bottom: .75rem;
             display: block;
             position: relative;
+            border-radius: 5px;
             box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
         }
 
@@ -228,6 +229,33 @@
         a.widget-header-title {
             padding: .625rem;
         }
+
+        .card {
+            /* background-image: url("static/images/snow.jpg"); */
+            background-size: cover;
+            width: 600px;
+            height: 230px;
+            border-radius: 20px;
+            box-shadow: 0px 8px 16px 4px #9E9E9E;
+            margin-top: 15px;
+            margin-bottom: 50px;
+        }
+
+        .time-font {
+            font-size: 30px;
+        }
+
+        .sm-font {
+            font-size: 10px;
+        }
+
+        .med-font {
+            font-size: 18px;
+        }
+
+        .large-font {
+            font-size: 40px;
+        }
     </style>
 </head>
 
@@ -239,7 +267,8 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-
+                <h3 class="text-light"><img src="static/images/calendar.png" class="float-left" width="35"
+                        height="35">&nbsp; SCHEDULES</h3>
                 <div class="widget widget-reminder">
                     <div class="widget-reminder-header">TODAY, NOV 4</div>
                     <div class="widget-reminder-container">
@@ -255,7 +284,7 @@
                     </div>
                     <div class="widget-reminder-container">
                         <div class="widget-reminder-time">
-                            20:00<br/>
+                            20:00<br />
                             23:00
                         </div>
                         <div class="widget-reminder-divider bg-primary"></div>
@@ -271,86 +300,31 @@
                             </div> -->
                         </div>
                     </div>
-                    <!-- <div class="widget-reminder-header">TOMORROW, NOV 5</div>
-                    <div class="widget-reminder-container">
-                        <div class="widget-reminder-time">All day</div>
-                        <div class="widget-reminder-divider bg-purple"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title"><i class="fa fa-gift text-purple"></i>
-                                Terry Birthday</h4>
-                        </div>
-                    </div>
-                    <div class="widget-reminder-container">
-                        <div class="widget-reminder-time">
-                            00:00<br />
-                            00:30
-                        </div>
-                        <div class="widget-reminder-divider bg-danger"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title">Server Maintenance</h4>
-                            <div class="widget-desc"><i class="ti-pin"></i>
-                                Data Centre</div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
-            <!-- <div class="col-md-5">
-                <div class="widget widget-reminder">
-                    <div class="widget-reminder-header">TODAY, NOV 5</div>
-                    <div class="widget-reminder-container">
-                        <div class="widget-reminder-time">
-                            09:00<br />
-                            12:00
-                        </div>
-                        <div class="widget-reminder-divider bg-success"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title">Meeting with HR</h4>
-                            <div class="widget-desc"><i class="fa fa-map-pin"></i> Conference
-                                Room</div>
-                        </div>
-                    </div>
-                    <div class="widget-reminder-container">
-                        <div class="widget-reminder-time">
-                            20:00<br />
-                            23:00
-                        </div>
-                        <div class="widget-reminder-divider bg-primary"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title">Dinner with
-                                Richard</h4>
-                            <div class="widget-desc"><i class="fa fa-map-pin"></i> Tom's Too
-                                Restaurant</div>
-                            <div class="m-t-15">
-                                <a href="#" class="pull-right">Contact</a>
-                                <img src="https://bootdey.com/img/Content/avatar/avatar6.png" width="16"
-                                    class="img-circle pull-left m-r-5" alt /> John Doe
+            <div class="col-md-3"></div>
+            <div class="col-md-5">
+                <div class="container-fluid ">
+                    <div class="row d-flex mt-0 justify-content-end">
+                        <div class="card" style="width: 20rem;">
+                            <div class="row">
+                                <div class="col-6 align-items-center">
+                                    <img class="img-fluid" src="static/images/cloudy.png">
+                                </div>
+                                <div class="col-6 ">
+                                    <h2 class="ml-auto mr-4 mt-3 mb-0 text-right">Toronto</h2>
+                                    <p class=" ml-auto mr-4 mb-0 med-font text-right">Snow</p>
+                                    <h1 class="ml-auto mr-4 large-font text-right">-20&#176;</h1>
+                                </div>
+
                             </div>
-                        </div>
-                    </div>
-                    <div class="widget-reminder-header">TOMORROW, NOV
-                        5</div>
-                    <div class="widget-reminder-container">
-                        <div class="widget-reminder-time">All day</div>
-                        <div class="widget-reminder-divider bg-purple"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title"><i class="fa fa-gift text-purple"></i>
-                                Terry Birthday</h4>
-                        </div>
-                    </div>
-                    <div class="widget-reminder-container">
-                        <div class="widget-reminder-time">
-                            00:00<br />
-                            00:30
-                        </div>
-                        <div class="widget-reminder-divider bg-danger"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title">Server Maintenance</h4>
-                            <div class="widget-desc"><i class="ti-pin"></i>
-                                Data Centre</div>
+
+                            <p class="time-font mb-0 ml-4 mt-auto">08:30 <span class="sm-font">AM</span></p>
+                            <p class="ml-4 mb-4">Wednesday, 18 October 2019</p>
                         </div>
                     </div>
                 </div>
-            </div> -->
+            </div>
         </div>
     </div>
     <script src="static/assets/js/jquery-1.10.2.min.js"></script>
