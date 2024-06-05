@@ -133,7 +133,7 @@
 
         body {
             background: #000000;
-            background-image: url('static/images/bg.png');
+            background-image: url('static/images/wallpaper.jpg');
             background-size: cover;            /* Để ảnh phủ toàn bộ nền */
             background-repeat: no-repeat;            /* Để ảnh không lặp lại */
             background-position: center;            /* Đặt vị trí ảnh ở giữa */
@@ -310,7 +310,7 @@
             flex-direction: column;
             min-width: 0;
             word-wrap: break-word;
-            background-color: #fff;
+            background-color: #000000;
             background-clip: border-box;
             border: 0 solid transparent;
             border-radius: 0;
@@ -318,7 +318,7 @@
         }
 
         .node_card {
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         .node_card-body {
@@ -452,14 +452,11 @@
         .truncate-content {
             display: -webkit-box;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            /* số dòng mà bạn muốn hiển thị */
+            -webkit-line-clamp: 1;
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.5em;
-            /* chiều cao của dòng, có thể tùy chỉnh */
-            max-height: 3em;
-            /* 2 dòng * chiều cao của dòng */
+            max-width: 22.5em; /* 30 ký tự * 0.5em (khoảng cách giữa các ký tự) */
         }
 
         /* Your existing styles */
@@ -526,18 +523,17 @@
                         <div class="card"  id="schedule-container" style="width: 20rem;">
                             <div class="row">
                                 <div class="col-6 align-items-center">
-                                    <img class="img-fluid" src="static/images/cloudy.png">
+                                    <img class="ml-4 mb-4 img-fluid" style="max-width: 90px;" src="static/images/cloudy.png">
                                 </div>
                                 <div class="col-6 ">
-                                    <h2 class="ml-auto mr-4 mt-3 mb-0 text-right">Toronto</h2>
-                                    <p class=" ml-auto mr-4 mb-0 med-font text-right">Snow</p>
-                                    <h1 class="ml-auto mr-4 large-font text-right">-20&#176;</h1>
+                                    <h2 class="ml-auto mr-4 mt-3 mb-0 text-right text-light">Toronto</h2>
+                                    <p class=" ml-auto mr-4 mb-0 med-font text-right text-light">Snow</p>
+                                    <h1 class="ml-auto mr-4 large-font text-right text-light">-20&#176;</h1>
                                 </div>
-
                             </div>
 
-                            <p class="time-font mb-0 ml-4 mt-auto">{{ time_str }}<span class="sm-font">AM</span></p>
-                            <p class="ml-4 mb-4">{{ date_str }}</p>
+                            <p class="time-font mb-0 ml-4  text-light" style="margin-top: -60px;">{{ time_str }}<span class="sm-font">AM</span></p>
+                            <p class="ml-4 mb-4 text-light">{{ date_str }}</p>
                         </div>
                     </div>
                 </div>
@@ -545,18 +541,18 @@
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <h3 class="text-light"><img src="static/images/sticky-notes.png" class="float-left" width="35"
-                        height="35">&nbsp; NOTES</h3>
+            <div class="col-md-5">
+                <h3 class="text-light"><img src="static/images/notes.png" class="float-left icon-white" width="35"
+                        height="35">&nbsp; </h3>
                 <div class="note-has-grid ">
                     <div class="single-note-item note-business" style>
-                        <div class="node_card node_card-body">
+                        <div class="node_card node_card-body ">
                             <span class="side-stick"></span>
                             <!-- <h5 class="note-title text-truncate " data-noteheading="Book a Ticket for Movie ">
                                 Book
                                 a Ticket for Movie spide SEF</h5> -->
                             <div class="note-content truncate-content">
-                                <p class="text-muted " style="margin-bottom: 0px;"
+                                <p class="text-light " style="margin-bottom: 0px;"
                                     data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
                                     Blandit tempus porttitor aasfs. Integer posuere sfkn asiudh asjkgd asuhd</p>
                             </div>
@@ -571,7 +567,7 @@
                             <!-- <h5 class="note-title text-truncate w-75 mb-0" data-noteheading="Book a Ticket for Movie">Book
                                 a Ticket for Movie </h5> -->
                             <div class="note-content truncate-content">
-                                <p class="text-muted" style="margin-bottom: 0px;"
+                                <p class="text-light" style="margin-bottom: 0px;"
                                     data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
                                     Blandit tempus porttitor aasfs. Integer posuere erat </p>
                             </div>
@@ -595,13 +591,13 @@
                 </div> -->
             </div>
             <div class="col-md-2"></div>
-            <div class="col-md-6">
+            <!-- <div class="col-md-6">
                 <div class="container-fluid ">
                     <div class="row d-flex mt-0 justify-content-end">
                         <img style="border-radius: 15px; display: block; max-width: 100%; height: 220px; box-shadow: 0px 8px 16px 4px #9E9E9E;" src="static/images/snow.jpg" alt>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="static/assets/js/jquery-1.10.2.min.js"></script>
