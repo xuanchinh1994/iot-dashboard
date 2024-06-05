@@ -91,20 +91,66 @@
         });
     </script> -->
 
+    <!-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateSchedules() {
+                fetch('/api/latest-schedules')
+                    .then(response => response.json())
+                    .then(data => {
+                        const scheduleContainer = document.getElementById('schedule-container');
+                        scheduleContainer.innerHTML = '';
+                        data.forEach(schedule => {
+                            const scheduleItem = `
+                                <h3 class="text-light"><img src="static/images/calendar_1.png" class="float-left icon-white" width="35" height="35">&nbsp; </h3>
+                                <div class="widget widget-reminder">
+                                    <div class="widget-reminder-header">${schedule.date}</div>
+                                    <div class="widget-reminder-container">
+                                        <div class="widget-reminder-time">
+                                            ${schedule.start_time}<br />
+                                            ${schedule.end_time}
+                                        </div>
+                                        <div class="widget-reminder-divider bg-success"></div>
+                                        <div class="widget-reminder-content">
+                                            <h4 class="widget-title">${schedule.shedule}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            scheduleContainer.innerHTML += scheduleItem;
+                        });
+                    });
+            }
+
+            // Periodically update schedules every 30 seconds
+            setInterval(updateSchedules, 10000);
+
+            // Initial fetch
+            updateSchedules();
+        });
+    </script> -->
     <link href="static/assets/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
+
         body {
-            background: #4d4b4b;
-            margin-top: 20px;
+            background: #000000;
+            background-image: url('static/images/bg.png');
+            background-size: cover;            /* Để ảnh phủ toàn bộ nền */
+            background-repeat: no-repeat;            /* Để ảnh không lặp lại */
+            background-position: center;            /* Đặt vị trí ảnh ở giữa */
+            margin-top: 20px;            /* Khoảng cách từ top */
         }
 
+        .icon-white {
+            filter: invert(1);
+        }
         .widget {
-            background: #fff;
-            margin-bottom: .75rem;
+            background: #000000;
+            margin-bottom: .45rem;
             display: block;
             position: relative;
             border-radius: 5px;
             box-shadow: 0 0.46875rem 2.1875rem rgba(90, 97, 105, 0.1), 0 0.9375rem 1.40625rem rgba(90, 97, 105, 0.1), 0 0.25rem 0.53125rem rgba(90, 97, 105, 0.12), 0 0.125rem 0.1875rem rgba(90, 97, 105, 0.1);
+            box-shadow: 0px 8px 16px 4px #9E9E9E;
         }
 
         .widget .widget-header,
@@ -158,7 +204,7 @@
         }
 
         .widget-reminder-time {
-            width: 5rem;
+            width: 9rem;
             float: left;
             text-align: right;
             font-size: 0.625rem;
@@ -168,13 +214,13 @@
             position: absolute;
             top: 0;
             bottom: 0;
-            left: 5rem;
+            left: 9rem;
             width: 0.125rem;
             background: #efeff4;
         }
 
         .widget-reminder-content {
-            margin-left: 5.125rem;
+            margin-left: 9.125rem;
         }
 
         .widget-header-title {
@@ -232,12 +278,13 @@
 
         .card {
             /* background-image: url("static/images/snow.jpg"); */
-            background-size: cover;
+            background-color: #000;
+            /* background-size: cover; */
             width: 600px;
-            height: 230px;
+            height: 150px;
             border-radius: 20px;
             box-shadow: 0px 8px 16px 4px #9E9E9E;
-            margin-top: 15px;
+            margin-top: 35px;
             margin-bottom: 50px;
         }
 
@@ -256,6 +303,190 @@
         .large-font {
             font-size: 40px;
         }
+
+        .node_card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            word-wrap: break-word;
+            background-color: #fff;
+            background-clip: border-box;
+            border: 0 solid transparent;
+            border-radius: 0;
+            box-shadow: 0px 8px 16px 4px #9E9E9E;
+        }
+
+        .node_card {
+            margin-bottom: 10px;
+        }
+
+        .node_card-body {
+            flex: 1 1 auto;
+            padding: 1.0rem;
+        }
+
+        .note-has-grid .nav-link {
+            padding: .5rem
+        }
+
+        .note-has-grid .single-note-item .node_card {
+            border-radius: 10px
+        }
+
+        .note-has-grid .single-note-item .favourite-note {
+            cursor: pointer
+        }
+
+        .note-has-grid .single-note-item .side-stick {
+            position: absolute;
+            width: 3px;
+            height: 35px;
+            left: 0;
+            background-color: rgba(82, 95, 127, .5)
+        }
+
+        .note-has-grid .single-note-item .category-dropdown.dropdown-toggle:after {
+            display: none
+        }
+
+        .note-has-grid .single-note-item .category [class*=category-] {
+            height: 15px;
+            width: 15px;
+            display: none
+        }
+
+        .note-has-grid .single-note-item .category [class*=category-]::after {
+            content: "\f0d7";
+            font: normal normal normal 14px/1 FontAwesome;
+            font-size: 12px;
+            color: #fff;
+            position: absolute
+        }
+
+        .note-has-grid .single-note-item .category .category-business {
+            background-color: rgba(44, 208, 126, .5);
+            border: 2px solid #2cd07e
+        }
+
+        .note-has-grid .single-note-item .category .category-social {
+            background-color: rgba(44, 171, 227, .5);
+            border: 2px solid #2cabe3
+        }
+
+        .note-has-grid .single-note-item .category .category-important {
+            background-color: rgba(255, 80, 80, .5);
+            border: 2px solid #ff5050
+        }
+
+        .note-has-grid .single-note-item.all-category .point {
+            color: rgba(82, 95, 127, .5)
+        }
+
+        .note-has-grid .single-note-item.note-business .point {
+            color: rgba(44, 208, 126, .5)
+        }
+
+        .note-has-grid .single-note-item.note-business .side-stick {
+            background-color: rgba(44, 208, 126, .5)
+        }
+
+        .note-has-grid .single-note-item.note-business .category .category-business {
+            display: inline-block
+        }
+
+        .note-has-grid .single-note-item.note-favourite .favourite-note {
+            color: #ffc107
+        }
+
+        .note-has-grid .single-note-item.note-social .point {
+            color: rgba(44, 171, 227, .5)
+        }
+
+        .note-has-grid .single-note-item.note-social .side-stick {
+            background-color: rgba(44, 171, 227, .5)
+        }
+
+        .note-has-grid .single-note-item.note-social .category .category-social {
+            display: inline-block
+        }
+
+        .note-has-grid .single-note-item.note-important .point {
+            color: rgba(255, 80, 80, .5)
+        }
+
+        .note-has-grid .single-note-item.note-important .side-stick {
+            background-color: rgba(255, 80, 80, .5)
+        }
+
+        .note-has-grid .single-note-item.note-important .category .category-important {
+            display: inline-block
+        }
+
+        .note-has-grid .single-note-item.all-category .more-options,
+        .note-has-grid .single-note-item.all-category.note-favourite .more-options {
+            display: block
+        }
+
+        .note-has-grid .single-note-item.all-category.note-business .more-options,
+        .note-has-grid .single-note-item.all-category.note-favourite.note-business .more-options,
+        .note-has-grid .single-note-item.all-category.note-favourite.note-important .more-options,
+        .note-has-grid .single-note-item.all-category.note-favourite.note-social .more-options,
+        .note-has-grid .single-note-item.all-category.note-important .more-options,
+        .note-has-grid .single-note-item.all-category.note-social .more-options {
+            display: none
+        }
+
+        @media (max-width:767.98px) {
+            .note-has-grid .single-note-item {
+                max-width: 100%
+            }
+        }
+
+        @media (max-width:991.98px) {
+            .note-has-grid .single-note-item {
+                max-width: 216px
+            }
+        }
+
+        .truncate-content {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            /* số dòng mà bạn muốn hiển thị */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.5em;
+            /* chiều cao của dòng, có thể tùy chỉnh */
+            max-height: 3em;
+            /* 2 dòng * chiều cao của dòng */
+        }
+
+        /* Your existing styles */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo-container img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .icon-container {
+            position: absolute;
+            top: 10px; /* Khoảng cách từ trên xuống */
+            right: 10px; /* Khoảng cách từ phải qua */
+            display: flex;
+            gap: 10px; /* Khoảng cách giữa các icon */
+        }
+        .icon-container img {
+            width: 30px; /* Kích thước của ảnh, tùy chọn */
+            height: 30px; /* Kích thước của ảnh, tùy chọn */
+        }
+        
+
     </style>
 </head>
 
@@ -266,47 +497,33 @@
     <link href="static/assets/css/font-awesome.min.css" rel="stylesheet">
     <div class="container">
         <div class="row">
-            <div class="col-md-4">
-                <h3 class="text-light"><img src="static/images/calendar.png" class="float-left" width="35"
-                        height="35">&nbsp; SCHEDULES</h3>
-                <div class="widget widget-reminder">
-                    <div class="widget-reminder-header">TODAY, NOV 4</div>
+            <div class="icon-container icon-white">
+                <img src="static/images/bluetooth.png" alt="Bluetooth Icon">
+                <img src="static/images/battery.png" alt="Battery Icon">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5" id="schedule-container">
+                <h3 class="text-light"><img src="static/images/calendar_1.png" class="float-left icon-white" width="35" height="35">&nbsp; </h3>
+                {% for schedule in schedules %}
+                <div class="widget widget-reminder text-light">
                     <div class="widget-reminder-container">
                         <div class="widget-reminder-time">
-                            09:00<br />
-                            12:00
+                            <b>{{ schedule[2] }}</b> - {{ schedule[3] }}-{{ schedule[4] }}
                         </div>
                         <div class="widget-reminder-divider bg-success"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title">Meeting with HR</h4>
-                            <div class="widget-desc"><i class="fa fa-map-pin"></i> Conference Room</div>
-                        </div>
-                    </div>
-                    <div class="widget-reminder-container">
-                        <div class="widget-reminder-time">
-                            20:00<br />
-                            23:00
-                        </div>
-                        <div class="widget-reminder-divider bg-primary"></div>
-                        <div class="widget-reminder-content">
-                            <h4 class="widget-title">Dinner with
-                                Richard</h4>
-                            <div class="widget-desc"><i class="fa fa-map-pin"></i> Tom's Too
-                                Restaurant</div>
-                            <!-- <div class="m-t-15">
-                                <a href="#" class="pull-right">Contact</a>
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" width="16"
-                                    class="img-circle pull-left m-r-5" alt /> Richard Leong
-                            </div> -->
+                        <div class="widget-reminder-content ">
+                            <h4 class="widget-title text-light">{{ schedule[1] }}</h4>
                         </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-            <div class="col-md-3"></div>
-            <div class="col-md-5">
+            <div class="col-md-2"></div>
+            <div class="col-md-5" >
                 <div class="container-fluid ">
                     <div class="row d-flex mt-0 justify-content-end">
-                        <div class="card" style="width: 20rem;">
+                        <div class="card"  id="schedule-container" style="width: 20rem;">
                             <div class="row">
                                 <div class="col-6 align-items-center">
                                     <img class="img-fluid" src="static/images/cloudy.png">
@@ -319,9 +536,69 @@
 
                             </div>
 
-                            <p class="time-font mb-0 ml-4 mt-auto">08:30 <span class="sm-font">AM</span></p>
-                            <p class="ml-4 mb-4">Wednesday, 18 October 2019</p>
+                            <p class="time-font mb-0 ml-4 mt-auto">{{ time_str }}<span class="sm-font">AM</span></p>
+                            <p class="ml-4 mb-4">{{ date_str }}</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3 class="text-light"><img src="static/images/sticky-notes.png" class="float-left" width="35"
+                        height="35">&nbsp; NOTES</h3>
+                <div class="note-has-grid ">
+                    <div class="single-note-item note-business" style>
+                        <div class="node_card node_card-body">
+                            <span class="side-stick"></span>
+                            <!-- <h5 class="note-title text-truncate " data-noteheading="Book a Ticket for Movie ">
+                                Book
+                                a Ticket for Movie spide SEF</h5> -->
+                            <div class="note-content truncate-content">
+                                <p class="text-muted " style="margin-bottom: 0px;"
+                                    data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
+                                    Blandit tempus porttitor aasfs. Integer posuere sfkn asiudh asjkgd asuhd</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="note-has-grid ">
+                    <div class="single-note-item note-important" style>
+                        <div class="node_card node_card-body">
+                            <span class="side-stick"></span>
+                            <!-- <h5 class="note-title text-truncate w-75 mb-0" data-noteheading="Book a Ticket for Movie">Book
+                                a Ticket for Movie </h5> -->
+                            <div class="note-content truncate-content">
+                                <p class="text-muted" style="margin-bottom: 0px;"
+                                    data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
+                                    Blandit tempus porttitor aasfs. Integer posuere erat </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- <div class="note-has-grid ">
+                    <div class="single-note-item note-social" style>
+                        <div class="node_card node_card-body">
+                            <span class="side-stick"></span>
+                            <div class="note-content">
+                                <p class="text-muted" style="margin-bottom: 0px;"
+                                    data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
+                                    Blandit tempus porttitor aasfs. Integer posuere erat skdjhf likeusuhf ,aksdfj lsakejfh
+                                    sealdkfjh</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-6">
+                <div class="container-fluid ">
+                    <div class="row d-flex mt-0 justify-content-end">
+                        <img style="border-radius: 15px; display: block; max-width: 100%; height: 220px; box-shadow: 0px 8px 16px 4px #9E9E9E;" src="static/images/snow.jpg" alt>
                     </div>
                 </div>
             </div>
