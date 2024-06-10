@@ -91,27 +91,24 @@
         });
     </script> -->
 
-    <!-- <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             function updateSchedules() {
                 fetch('/api/latest-schedules')
                     .then(response => response.json())
                     .then(data => {
                         const scheduleContainer = document.getElementById('schedule-container');
-                        scheduleContainer.innerHTML = '';
+                        scheduleContainer.innerHTML = '<h3 class="text-light"><img src="static/images/calendar_1.png" class="float-left icon-white" width="35" height="35">&nbsp; </h3>';
                         data.forEach(schedule => {
                             const scheduleItem = `
-                                <h3 class="text-light"><img src="static/images/calendar_1.png" class="float-left icon-white" width="35" height="35">&nbsp; </h3>
-                                <div class="widget widget-reminder">
-                                    <div class="widget-reminder-header">${schedule.date}</div>
+                                <div class="widget widget-reminder text-light">
                                     <div class="widget-reminder-container">
                                         <div class="widget-reminder-time">
-                                            ${schedule.start_time}<br />
-                                            ${schedule.end_time}
+                                            <b>${schedule.date}</b> - ${schedule.start_time}-${schedule.end_time}
                                         </div>
                                         <div class="widget-reminder-divider bg-success"></div>
                                         <div class="widget-reminder-content">
-                                            <h4 class="widget-title">${schedule.shedule}</h4>
+                                            <h4 class="widget-title text-light">${schedule.shedule}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -121,28 +118,117 @@
                     });
             }
 
-            // Periodically update schedules every 30 seconds
+            function updateWeather() {
+                fetch('/api/latest-weather')
+                    .then(response => response.json())
+                    .then(weather => {
+                        if (weather) {
+                            document.getElementById('weather-city').textContent = weather.city || 'Unknown';
+                            document.getElementById('weather-status').textContent = weather.weather;
+                            document.getElementById('weather-temp').innerHTML = `${weather.temperature}&#176;`;
+
+                            const weatherIconMap = {
+                                'Sunny': 'sun.png',
+                                'Partly Cloudy': 'partly-cloudy.png',
+                                'Cloudy': 'cloudy.png',
+                                'Rainy': 'rainy-day.png',
+                                'Thunderstorm': 'thunderstorm.png',
+                                'Snowy': 'snowy.png',
+                                'Foggy': 'foggy.png',
+                                'Windy': 'windy.png',
+                                'Hail': 'hail.png',
+                                'Mist': 'mist.png',
+                                'Tornado': 'tornado.png',
+                                'Hurricane': 'hurricane.png',
+                                'Drizzle': 'drizzle.png',
+                                'Sleet': 'sleet.png',
+                                'Freezing Rain': 'freezing-rain.png',
+                                'Overcast': 'overcast.png'
+                            };
+                            const weatherIcon = weatherIconMap[weather.weather] || 'sun.png';
+                            document.getElementById('weather-icon').src = `static/images/${weatherIcon}`;
+                        }
+                    });
+            }
+
+            function updateTime() {
+                const now = new Date();
+                const hours = now.getHours();
+                const minutes = now.getMinutes();
+                // const seconds = now.getSeconds();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                const displayHours = hours % 12 || 12;
+                const timeStr = `${displayHours}:${minutes.toString().padStart(2, '0')} <span class="sm-font"><b>&nbsp;${ampm}</b></span>`;
+                const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+                document.getElementById('time-display').innerHTML = timeStr;
+                document.getElementById('date-display').innerHTML = dateStr;
+            }
+
+            function updateNotes() {
+                fetch('/api/latest-notes')
+                    .then(response => response.json())
+                    .then(data => {
+                        const notesContainer = document.getElementById('notes-container');
+                        notesContainer.innerHTML = '<h3 class="text-light"><img src="static/images/notes.png" class="float-left icon-white" width="35" height="35">&nbsp; </h3>';
+                        data.forEach(note => {
+                            const noteItem = `
+                                <div class="note-has-grid">
+                                    <div class="single-note-item note-important">
+                                        <div class="node_card node_card-body">
+                                            <span class="side-stick"></span>
+                                            <div class="note-content truncate-content">
+                                                <p class="text-light" style="margin-bottom: 0px;">
+                                                    ${note} </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            notesContainer.innerHTML += noteItem;
+                        });
+                    });
+            }
+
+            // Periodically update schedules every 10 seconds
             setInterval(updateSchedules, 10000);
+
+            // Periodically update weather every 10 seconds
+            setInterval(updateWeather, 10000);
+
+            // Periodically update time every minute
+            setInterval(updateTime, 60000);
+
+            // Periodically update notes every 10 seconds
+            setInterval(updateNotes, 10000);
 
             // Initial fetch
             updateSchedules();
+            updateTime();
+            updateWeather();
+            updateNotes();
         });
-    </script> -->
+    </script>
     <link href="static/assets/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
-
         body {
             background: #000000;
             background-image: url('static/images/wallpaper.jpg');
-            background-size: cover;            /* Để ảnh phủ toàn bộ nền */
-            background-repeat: no-repeat;            /* Để ảnh không lặp lại */
-            background-position: center;            /* Đặt vị trí ảnh ở giữa */
-            margin-top: 20px;            /* Khoảng cách từ top */
+            background-size: cover;
+            /* Để ảnh phủ toàn bộ nền */
+            background-repeat: no-repeat;
+            /* Để ảnh không lặp lại */
+            background-position: center;
+            /* Đặt vị trí ảnh ở giữa */
+            margin-top: 20px;
+            /* Khoảng cách từ top */
         }
+
 
         .icon-white {
             filter: invert(1);
         }
+
         .widget {
             background: #000000;
             margin-bottom: .45rem;
@@ -323,7 +409,7 @@
 
         .node_card-body {
             flex: 1 1 auto;
-            padding: 1.0rem;
+            padding: .3rem;
         }
 
         .note-has-grid .nav-link {
@@ -331,7 +417,7 @@
         }
 
         .note-has-grid .single-note-item .node_card {
-            border-radius: 10px
+            border-radius: 5px
         }
 
         .note-has-grid .single-note-item .favourite-note {
@@ -341,7 +427,7 @@
         .note-has-grid .single-note-item .side-stick {
             position: absolute;
             width: 3px;
-            height: 35px;
+            height: 25px;
             left: 0;
             background-color: rgba(82, 95, 127, .5)
         }
@@ -456,7 +542,8 @@
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.5em;
-            max-width: 22.5em; /* 30 ký tự * 0.5em (khoảng cách giữa các ký tự) */
+            max-width: 22.5em;
+            /* 30 ký tự * 0.5em (khoảng cách giữa các ký tự) */
         }
 
         /* Your existing styles */
@@ -473,24 +560,43 @@
 
         .icon-container {
             position: absolute;
-            top: 10px; /* Khoảng cách từ trên xuống */
-            right: 10px; /* Khoảng cách từ phải qua */
+            top: 10px;
+            /* Khoảng cách từ trên xuống */
+            right: 10px;
+            /* Khoảng cách từ phải qua */
             display: flex;
-            gap: 10px; /* Khoảng cách giữa các icon */
+            gap: 10px;
+            /* Khoảng cách giữa các icon */
         }
-        .icon-container img {
-            width: 30px; /* Kích thước của ảnh, tùy chọn */
-            height: 30px; /* Kích thước của ảnh, tùy chọn */
-        }
-        
 
+        .icon-container img {
+            width: 30px;
+            /* Kích thước của ảnh, tùy chọn */
+            height: 30px;
+            /* Kích thước của ảnh, tùy chọn */
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 280px;
+            /* Khoảng cách từ trên xuống */
+            right: 440px;
+            /* Khoảng cách từ phải qua */
+            display: flex;
+            gap: 10px;
+            /* Khoảng cách giữa các icon */
+        }
+
+        .logo-container img {
+            width: 150px;
+            /* Kích thước của ảnh, tùy chọn */
+            height: 100%;
+            /* Kích thước của ảnh, tùy chọn */
+        }
     </style>
 </head>
 
 <body>
-    <!-- <img src="static/images/void_logo.png"> -->
-
-
     <link href="static/assets/css/font-awesome.min.css" rel="stylesheet">
     <div class="container">
         <div class="row">
@@ -498,10 +604,17 @@
                 <img src="static/images/bluetooth.png" alt="Bluetooth Icon">
                 <img src="static/images/battery.png" alt="Battery Icon">
             </div>
+            <div class="logo-container">
+                <img src="static/images/voydAsset 1.png" alt="Logo Icon">
+            </div>
+        </div>
+        <div class="row">
+
         </div>
         <div class="row">
             <div class="col-md-5" id="schedule-container">
-                <h3 class="text-light"><img src="static/images/calendar_1.png" class="float-left icon-white" width="35" height="35">&nbsp; </h3>
+                <h3 class="text-light"><img src="static/images/calendar_1.png" class="float-left icon-white" width="35"
+                        height="35">&nbsp; </h3>
                 {% for schedule in schedules %}
                 <div class="widget widget-reminder text-light">
                     <div class="widget-reminder-container">
@@ -517,23 +630,26 @@
                 {% endfor %}
             </div>
             <div class="col-md-2"></div>
-            <div class="col-md-5" >
+            <div class="col-md-5">
                 <div class="container-fluid ">
                     <div class="row d-flex mt-0 justify-content-end">
-                        <div class="card"  id="schedule-container" style="width: 20rem;">
+                        <div class="card" id="schedule-container" style="width: 20rem;">
                             <div class="row">
-                                <div class="col-6 align-items-center">
-                                    <img class="ml-4 mb-4 img-fluid" style="max-width: 90px;" src="static/images/cloudy.png">
+                                <div class="col-3 align-items-center">
+                                    <img id="weather-icon" class="ml-4 mb-4 img-fluid icon-white" style="max-width: 80px;"
+                                        src="static/images/cloudy.png">
                                 </div>
-                                <div class="col-6 ">
-                                    <h2 class="ml-auto mr-4 mt-3 mb-0 text-right text-light">Toronto</h2>
-                                    <p class=" ml-auto mr-4 mb-0 med-font text-right text-light">Snow</p>
-                                    <h1 class="ml-auto mr-4 large-font text-right text-light">-20&#176;</h1>
+                                <div class="col-9 ">
+                                    <h4 id="weather-city" class="ml-auto mr-2 mt-3 mb-0 text-right text-light" style="white-space: nowrap;">{{ weather[5] }}</h4>
+                                    <p id="weather-status" class=" ml-auto mr-2 mb-0 med-font text-right text-light">{{ weather[3] }}</p>
+                                    <h1 id="weather-temp" class="ml-auto mr-2 large-font text-right text-light">{{ weather[1] }}&#176;
+                                    </h1>
                                 </div>
                             </div>
-
-                            <p class="time-font mb-0 ml-4  text-light" style="margin-top: -60px;">{{ time_str }}<span class="sm-font">AM</span></p>
-                            <p class="ml-4 mb-4 text-light">{{ date_str }}</p>
+                            <div class="time-container">
+                                <p class="time-font mb-0 text-light ml-4" style="margin-top: -60px;" id="time-display"></p>
+                                <p class="mb-4 ml-4 text-light" id="date-display"></p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -541,63 +657,24 @@
         </div>
 
         <div class="row">
-            <div class="col-md-5">
+            <div class="col-md-5" id="notes-container">
                 <h3 class="text-light"><img src="static/images/notes.png" class="float-left icon-white" width="35"
                         height="35">&nbsp; </h3>
-                <div class="note-has-grid ">
-                    <div class="single-note-item note-business" style>
-                        <div class="node_card node_card-body ">
-                            <span class="side-stick"></span>
-                            <!-- <h5 class="note-title text-truncate " data-noteheading="Book a Ticket for Movie ">
-                                Book
-                                a Ticket for Movie spide SEF</h5> -->
-                            <div class="note-content truncate-content">
-                                <p class="text-light " style="margin-bottom: 0px;"
-                                    data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere sfkn asiudh asjkgd asuhd</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                {% for note in notes %}
                 <div class="note-has-grid ">
                     <div class="single-note-item note-important" style>
                         <div class="node_card node_card-body">
                             <span class="side-stick"></span>
-                            <!-- <h5 class="note-title text-truncate w-75 mb-0" data-noteheading="Book a Ticket for Movie">Book
-                                a Ticket for Movie </h5> -->
                             <div class="note-content truncate-content">
-                                <p class="text-light" style="margin-bottom: 0px;"
-                                    data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat </p>
+                                <p class="text-light" style="margin-bottom: 0px;">
+                                    {{ note }} </p>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-                <!-- <div class="note-has-grid ">
-                    <div class="single-note-item note-social" style>
-                        <div class="node_card node_card-body">
-                            <span class="side-stick"></span>
-                            <div class="note-content">
-                                <p class="text-muted" style="margin-bottom: 0px;"
-                                    data-notecontent="Blandit tempus porttitor aasfs. Integer posuere erat a ante venenatis.">
-                                    Blandit tempus porttitor aasfs. Integer posuere erat skdjhf likeusuhf ,aksdfj lsakejfh
-                                    sealdkfjh</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                {% endfor %}
             </div>
             <div class="col-md-2"></div>
-            <!-- <div class="col-md-6">
-                <div class="container-fluid ">
-                    <div class="row d-flex mt-0 justify-content-end">
-                        <img style="border-radius: 15px; display: block; max-width: 100%; height: 220px; box-shadow: 0px 8px 16px 4px #9E9E9E;" src="static/images/snow.jpg" alt>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
     <script src="static/assets/js/jquery-1.10.2.min.js"></script>
@@ -606,66 +683,6 @@
 
     </script>
 
-    <!-- <div class="container">
-
-        <div class="calendar">
-            <div id="calendar"></div>
-        </div>
-        <div class="widget">
-            <h2>Notes</h2>
-            {% for note in notes %}
-            <div class="note-item">{{ note }}</div>
-            {% endfor %}
-        </div>
-        <div class="widget device-info">
-            <h2>Device Information</h2>
-            <div class="device-info-item">Battery: {{ device_info[1] }}%</div>
-            <div class="device-info-item">Name: {{ device_info[2] }}</div>
-            <div class="device-info-item">Model: {{ device_info[3] }}</div>
-            <div class="device-info-item">Serial Number: {{ device_info[4] }}</div>
-            <div class="device-info-item">Hardware Revision: {{ device_info[5] }}</div>
-            <div class="device-info-item">Software Revision: {{ device_info[6] }}</div>
-        </div>
-        <div class="widget notes">
-            <h2>Notes</h2>
-            {% for note in notes %}
-            <div class="note-item">{{ note }}</div>
-            {% endfor %}
-        </div>
-        <div class="widget schedules">
-            <h2>Schedules</h2>
-            {% for schedule in schedules %}
-            <div class="schedule-item">{{ schedule[1] }} - {{ schedule[2] }} ({{ schedule[3] }} to {{ schedule[4] }})</div>
-            {% endfor %}
-        </div>
-        <div class="widget media">
-            <h2>Media</h2>
-            {% for item in media %}
-            <div class="media-item">
-                {% if item[1] == 'image' %}
-                <img src="{{ item[2] }}" alt="Media Image">
-                {% else %}
-                {{ item[1] }}: {{ item[2] }}
-                {% endif %}
-            </div>
-            {% endfor %}
-        </div>
-        <div class="widget weather">
-            <h2>Weather</h2>
-            <div class="weather-item">Temperature: {{ weather[1] }}°C</div>
-            <div class="weather-item">Humidity: {{ weather[2] }}%</div>
-            <div class="weather-item">Condition: {{ weather[3] }}</div>
-            <div class="weather-item">Time: {{ weather[4] }}</div>
-            <div class="weather-item">Location: {{ weather[5] }}</div>
-            <div class="weather-item"><a href="{{ weather[6] }}" style="color: #1e90ff;">More info</a></div>
-        </div>
-        <div class="logo">
-            <img src="{{ url_for('static', filename='images/void_logo.png') }}" alt="Logo">
-        </div>
-    </div> -->
-
-    <!-- <script src="static/assets/JS/util.js"></script> <!-- util functions included in the CodyHouse framework -->
-    <!-- <script src="static/assets/JS/main.js"></script> -->
 </body>
 
 </html>

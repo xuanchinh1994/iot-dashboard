@@ -68,8 +68,7 @@ CREATE TABLE IF NOT EXISTS shedules (
 
 # Insert some sample data to shedules
 c.execute('''
-INSERT INTO shedules (shedule, date, start_time, end_time) 
-VALUES ('Meeting with Lisa', '01/04/2024', '13:00', '14:00')
+INSERT INTO shedules (shedule, date, start_time, end_time) VALUES ('Meeting with Lisa_2', '05/06/2024', '14:00', '14:00')
 ''')
 
 # Create a table media

@@ -15,7 +15,7 @@ def get_device_info():
 def get_notes():
     conn = sqlite3.connect('iot_dashboard.db')
     c = conn.cursor()
-    c.execute('SELECT note FROM notes ORDER BY id DESC LIMIT 3')
+    c.execute('SELECT note FROM notes ORDER BY id DESC LIMIT 5')
     notes = c.fetchall()
     conn.close()
     return notes
@@ -99,10 +99,11 @@ def dashboard():
     }
 
     now = datetime.now()
-    time_str = now.strftime("%I:%M %p")
+    time_str = now.strftime("%I:%M")
     date_str = now.strftime("%A, %d %B %Y")
+    ampm_str = now.strftime("%p")
 
-    return render_template('dashboard.html', **context, time_str=time_str, date_str=date_str)
+    return render_template('dashboard.html', **context, time_str=time_str, date_str=date_str, ampm_str=ampm_str)
 
 @app.route('/api/latest-schedules')
 def api_latest_schedules():
@@ -121,9 +122,8 @@ def api_latest_schedules():
 
 @app.route('/api/latest-weather')
 def api_latest_weather():
-    weathers = get_weather()
-    weather_list = []
-    for weather in weathers:
+    weather = get_weather()
+    if weather:
         weather_dict = {
             'id': weather[0],
             'temperature': weather[1],
@@ -132,8 +132,14 @@ def api_latest_weather():
             'time': weather[4],
             'city': weather[5]
         }
-        weather_list.append(weather_dict)
-    return jsonify(weather_list)
+        return jsonify(weather_dict)
+    return jsonify({})
+
+@app.route('/api/latest-notes')
+def api_latest_notes():
+    notes = get_notes()
+    note_list = [note[0] for note in notes]
+    return jsonify(note_list)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
