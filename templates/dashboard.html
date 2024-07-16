@@ -8,90 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/style.css') }}">
     <title>IoT Dashboard</title>
     <link rel="stylesheet" href="static/assets/css/style.css">
-    <!-- <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js'></script> -->
-    <!-- <style>
-        body {
-            background-color: #2c2c2c;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: row;
-            padding: 20px;
-        }
-
-        .widget {
-            background-color: #3c3c3c;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 10px;
-            width: 70%;
-        }
-
-        .calendar {
-            width: 30%;
-        }
-
-        #calendar {
-            background-color: white;
-            color: black;
-            border-radius: 10px;
-            padding: 20px;
-        }
-
-        .widget h2 {
-            margin: 0;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #555;
-        }
-
-        .notes,
-        .schedules,
-        .media,
-        .weather,
-        .device-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .note-item,
-        .schedule-item,
-        .media-item,
-        .weather-item,
-        .device-info-item {
-            margin: 5px 0;
-        }
-
-        .logo {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var calendarEl = document.getElementById('calendar');
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                events: '/api/schedules',
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                }
-            });
-            calendar.render();
-        });
-    </script> -->
-
-    <script>
+     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function updateSchedules() {
                 fetch('/api/latest-schedules')
@@ -213,15 +130,11 @@
     <style type="text/css">
         body {
             background: #000000;
-            background-image: url('static/images/wallpaper.jpg');
+            /* background-image: url('static/images/wallpaper.jpg'); */
             background-size: cover;
-            /* Để ảnh phủ toàn bộ nền */
             background-repeat: no-repeat;
-            /* Để ảnh không lặp lại */
             background-position: center;
-            /* Đặt vị trí ảnh ở giữa */
             margin-top: 20px;
-            /* Khoảng cách từ top */
         }
 
 
@@ -546,18 +459,6 @@
             /* 30 ký tự * 0.5em (khoảng cách giữa các ký tự) */
         }
 
-        /* Your existing styles */
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .logo-container img {
-            max-width: 100%;
-            height: auto;
-        }
-
         .icon-container {
             position: absolute;
             top: 10px;
@@ -576,22 +477,47 @@
             /* Kích thước của ảnh, tùy chọn */
         }
 
-        .logo-container {
-            position: absolute;
-            top: 280px;
-            /* Khoảng cách từ trên xuống */
-            right: 440px;
-            /* Khoảng cách từ phải qua */
+        body, html {
+            height: 100%;
+            margin: 0;
             display: flex;
-            gap: 10px;
-            /* Khoảng cách giữa các icon */
+            justify-content: center;
+            align-items: center;
         }
 
-        .logo-container img {
-            width: 150px;
-            /* Kích thước của ảnh, tùy chọn */
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100%;
-            /* Kích thước của ảnh, tùy chọn */
+        }
+
+        .logo {
+            width: 150px;
+        }
+
+        .fixed-bottom-right {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+        }
+
+        .fixed-bottom-left {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+        }
+
+        .fixed-top-left {
+            position: fixed;
+            top: 20px;
+            left: 30px;
+        }
+
+        .fixed-top-right {
+            position: fixed;
+            top: 20px;
+            right: 30px;
         }
     </style>
 </head>
@@ -605,14 +531,14 @@
                 <img src="static/images/battery.png" alt="Battery Icon">
             </div>
             <div class="logo-container">
-                <img src="static/images/voydAsset 1.png" alt="Logo Icon">
+                <img src="static/images/voydAsset 1.png" alt="Logo" class="logo">
             </div>
         </div>
         <div class="row">
 
         </div>
         <div class="row">
-            <div class="col-md-5" id="schedule-container">
+            <div class="col-md-5 fixed-top-left" id="schedule-container">
                 <h3 class="text-light"><img src="static/images/calendar_1.png" class="float-left icon-white" width="35"
                         height="35">&nbsp; </h3>
                 {% for schedule in schedules %}
@@ -630,13 +556,13 @@
                 {% endfor %}
             </div>
             <div class="col-md-2"></div>
-            <div class="col-md-5">
+            <div class="col-md-5 fixed-top-right">
                 <div class="container-fluid ">
                     <div class="row d-flex mt-0 justify-content-end">
                         <div class="card" id="schedule-container" style="width: 20rem;">
                             <div class="row">
                                 <div class="col-3 align-items-center">
-                                    <img id="weather-icon" class="ml-4 mb-4 img-fluid icon-white" style="max-width: 80px;"
+                                    <img id="weather-icon" class="ml-4 mb-4 img-fluid icon-white" style="max-width: 70px;"
                                         src="static/images/cloudy.png">
                                 </div>
                                 <div class="col-9 ">
@@ -657,7 +583,7 @@
         </div>
 
         <div class="row">
-            <div class="col-md-5" id="notes-container">
+            <div class="col-md-5 fixed-bottom-left" id="notes-container">
                 <h3 class="text-light"><img src="static/images/notes.png" class="float-left icon-white" width="35"
                         height="35">&nbsp; </h3>
                 {% for note in notes %}
@@ -674,7 +600,14 @@
                 </div>
                 {% endfor %}
             </div>
-            <div class="col-md-2"></div>
+            <div class="col-md-1"></div>
+            <div class="col-md-6 fixed-bottom-right">
+                <div class="container-fluid ">
+                    <div class="row d-flex mt-0 justify-content-end">
+                        <img style="display: block; max-width: 100%; height: 220px; box-shadow: 0px 8px 16px 4px #9E9E9E;" src="static/images/wallpaper.jpg" alt>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="static/assets/js/jquery-1.10.2.min.js"></script>
